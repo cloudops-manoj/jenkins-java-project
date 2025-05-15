@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>in.RAHAM</groupId>
-    <artifactId>NETFLIX</artifactId>
+    <artifactId>NETFLIXX</artifactId>
     <packaging>war</packaging>
     <version>1.2.2</version>
     <name>Java Home myweb</name>
