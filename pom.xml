@@ -1,21 +1,31 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-         
+
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>in.RAHAM</groupId>
     <artifactId>NETFLIXX</artifactId>
-    <packaging>war</packaging>
     <version>1.2.2</version>
+    <packaging>war</packaging>
     <name>Java Home myweb</name>
     <url>http://maven.apache.org</url>
-    
+
+    <description>Netflix-style Java web application</description>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <docker.image.prefix>kammana</docker.image.prefix>
-    </properties>	
+    </properties>
 
     <dependencies>
         <dependency>
@@ -23,11 +33,12 @@
             <artifactId>bedrock-runtime-maven</artifactId>
             <version>5.1.2</version>
         </dependency>
-        
+
+        <!-- JUnit 5 (Jupiter) for modern testing -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -37,15 +48,14 @@
             <id>nexusRepo</id>
             <url>http://13.233.230.166:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
-        
         <repository>
             <id>nexusRepo</id>
             <url>http://13.233.230.166:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
-    
+
     <pluginRepositories>
-        <pluginRepository>    
+        <pluginRepository>
             <id>maven1</id>
             <name>Maven.org</name>
             <url>http://repo1.maven.org/maven2</url>
@@ -54,22 +64,41 @@
 
     <build>
         <plugins>
-            <!-- Upgrade the compiler plugin -->
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
 
-            <!-- ✅ Upgrade the WAR plugin to fix compatibility issues -->
+            <!-- WAR plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version> <!-- 🚀 Updated from 2.2 to 3.3.2 -->
+                <version>3.3.2</version>
+            </plugin>
+
+            <!-- Surefire plugin to run unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
+
+            <!-- Jib plugin for Docker image build -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <to>
+                        <image>${docker.image.prefix}/netflixx</image>
+                    </to>
+                </configuration>
             </plugin>
         </plugins>
     </build>
